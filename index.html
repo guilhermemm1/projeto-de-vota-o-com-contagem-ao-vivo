@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votação Ao Vivo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #1C1C3A, #3C64B1);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-weight: 600;
+        }
+        button {
+            background: #3C64B1;
+            color: white;
+            padding: 12px 25px;
+            margin: 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 8px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            background: #294E91;
+            transform: scale(1.1);
+        }
+        .results {
+            font-size: 22px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #technicalTie {
+            color: red;
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: bold;
+            animation: blink 1s infinite alternate;
+        }
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.6; }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐸​ Votação 🐸​</h1>
+        <div class="options">
+            <button onclick="vote('A')">🍉​ Melância</button>
+            <button onclick="vote('B')">🍍​ Abacaxi</button>
+        </div>
+        <h2>📊 Resultados</h2>
+        <div class="results">
+            <p>A: <span id="votesA">0</span> votos</p>
+            <p>B: <span id="votesB">0</span> votos</p>
+        </div>
+        <p id="technicalTie" class="hidden">🚨 Empate técnico detectado!</p>
+    </div>
+
+    <script>
+        let votes = { A: 0, B: 0 };
+
+        function vote(option) {
+            votes[option]++;
+            updateVotes();
+            checkTechnicalTie();
+        }
+
+        function updateVotes() {
+            document.getElementById("votesA").innerText = votes.A;
+            document.getElementById("votesB").innerText = votes.B;
+        }
+
+        function checkTechnicalTie() {
+            let diff = Math.abs(votes.A - votes.B);
+            if (diff <= 2) { 
+                document.getElementById("technicalTie").classList.remove("hidden");
+            } else {
+                document.getElementById("technicalTie").classList.add("hidden");
+            }
+        }
+    </script>
+</body>
+</html>
